@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Spin to Earn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#FBBF24',
+                        accent: '#3B82F6',
+                        dark: '#1E293B',
+                        light: '#F8FAFC',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-secondary;
+            }
+            .btn-gradient {
+                @apply bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary transition-all duration-300;
+            }
+            .glass-effect {
+                @apply backdrop-blur-lg bg-white/30;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light min-h-screen font-sans">
+    <!-- Navigation -->
+    <nav class="glass-effect shadow-lg fixed w-full z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-xl">S</span>
+                </div>
+                <h1 class="text-2xl font-bold text-gradient">Spin to Earn</h1>
+            </div>
+            <a href="index.html" class="text-dark hover:text-primary transition-colors">Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 pt-32 pb-20">
+        <div class="max-w-4xl mx-auto">
+            <!-- About Section -->
+            <section>
+                <h2 class="text-3xl font-bold text-gradient mb-8">About Spin to Earn</h2>
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <p class="text-dark/80 mb-6">
+                        Welcome to Spin to Earn, your ultimate destination for fun and rewards! We're a platform that combines entertainment with real earnings, offering you a chance to win money through our exciting daily spin wheel.
+                    </p>
+                    <h3 class="text-xl font-semibold text-dark mb-4">Our Mission</h3>
+                    <p class="text-dark/80 mb-6">
+                        Our mission is to provide a secure, fair, and enjoyable platform where users can earn real money through simple and engaging activities. We believe in transparency, user satisfaction, and creating a community of winners.
+                    </p>
+                    <h3 class="text-xl font-semibold text-dark mb-4">How It Works</h3>
+                    <ul class="list-disc list-inside text-dark/80 space-y-2 mb-6">
+                        <li>Sign up and get 5 free spins every day</li>
+                        <li>Spin the wheel to win up to ₹10 per day</li>
+                        <li>Withdraw your earnings when you reach ₹10</li>
+                        <li>Enjoy secure and instant withdrawals</li>
+                    </ul>
+                    <h3 class="text-xl font-semibold text-dark mb-4">Why Choose Us?</h3>
+                    <ul class="list-disc list-inside text-dark/80 space-y-2">
+                        <li>100% Secure and Safe Platform</li>
+                        <li>Instant Withdrawals</li>
+                        <li>Daily Free Spins</li>
+                        <li>24/7 Customer Support</li>
+                        <li>User-Friendly Interface</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html> 

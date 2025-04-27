@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin to Earn - Win Real Money</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',    // Blue
+                        secondary: '#FBBF24',  // Yellow
+                        accent: '#3B82F6',     // Light Blue
+                        dark: '#1E293B',       // Dark Blue
+                        light: '#F8FAFC',      // Light Background
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-secondary;
+            }
+            .btn-gradient {
+                @apply bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary transition-all duration-300;
+            }
+            .hero-gradient {
+                @apply bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10;
+            }
+            .card-gradient {
+                @apply bg-gradient-to-br from-light to-white;
+            }
+            .glass-effect {
+                @apply backdrop-blur-lg bg-white/30;
+            }
+            .hover-scale {
+                @apply transition-transform duration-300 hover:scale-105;
+            }
+            .card-shadow {
+                @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
+            }
+            .border-gradient {
+                @apply border-2 border-transparent bg-gradient-to-r from-primary to-secondary bg-clip-border;
+            }
+            .glow-effect {
+                @apply shadow-[0_0_15px_rgba(251,191,36,0.3)] hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] transition-shadow duration-300;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light min-h-screen font-sans">
+    <!-- Navigation -->
+    <nav class="glass-effect shadow-lg fixed w-full z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center glow-effect">
+                    <span class="text-white font-bold text-xl">S</span>
+                </div>
+                <h1 class="text-2xl font-bold text-gradient">Spin to Earn</h1>
+            </div>
+            <div id="userSection" class="hidden">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <img id="userPhoto" class="w-8 h-8 rounded-full border-2 border-primary" alt="User photo">
+                        <span id="userName" class="font-medium text-dark"></span>
+                    </div>
+                    <div class="bg-white/50 px-4 py-2 rounded-full border border-primary/20">
+                        <span class="text-primary font-semibold">₹</span>
+                        <span id="userBalance" class="font-semibold">0</span>
+                    </div>
+                    <button id="logoutBtn" class="text-dark hover:text-primary transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <button id="loginBtn" class="btn-gradient text-white px-6 py-2 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 glow-effect">
+                Login with Google
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        <span class="text-gradient">Spin & Win</span> Real Money
+                    </h1>
+                    <p class="text-xl text-dark/80 mb-8">
+                        Spin the wheel daily to win real money. Get up to ₹10 per day and withdraw your earnings!
+                    </p>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <button id="loginBtn2" class="btn-gradient text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 text-lg hover-scale glow-effect">
+                            Start Earning Now
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="card-gradient p-8 rounded-2xl shadow-xl border-gradient hover-scale glow-effect">
+                        <div class="wheel-preview relative max-w-[300px] mx-auto">
+                            <canvas id="previewWheel" class="w-full aspect-square"></canvas>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0 h-0 border-l-[15px] border-r-[15px] border-b-[30px] border-l-transparent border-r-transparent border-b-red-600 z-10"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gradient">Why Choose Us?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">Real Money Rewards</h3>
+                    <p class="text-dark/70">Win real money with every spin. Get up to ₹10 per day!</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">Secure & Safe</h3>
+                    <p class="text-dark/70">Your data is protected with Google Authentication and secure payments.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">Daily Spins</h3>
+                    <p class="text-dark/70">Get 5 free spins every day. More chances to win!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section (Hidden by default) -->
+    <section id="dashboard" class="hidden py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- User Info Card -->
+                <div class="card-gradient p-6 rounded-xl card-shadow border-gradient hover-scale glow-effect">
+                    <h3 class="text-lg font-semibold text-dark mb-4">User Information</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <img id="dashboardPhoto" class="w-12 h-12 rounded-full border-2 border-primary" alt="User photo">
+                            <div>
+                                <p id="dashboardName" class="font-medium text-dark"></p>
+                                <p id="dashboardEmail" class="text-sm text-dark/70"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings Card -->
+                <div class="card-gradient p-6 rounded-xl card-shadow border-gradient hover-scale glow-effect">
+                    <h3 class="text-lg font-semibold text-dark mb-4">Today's Progress</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-dark/70">Today's Earnings</span>
+                            <span class="font-semibold text-primary">₹<span id="todayEarnings">0</span>/10</span>
+                        </div>
+                        <div class="w-full bg-primary/10 rounded-full h-2.5">
+                            <div id="earningsProgress" class="bg-gradient-to-r from-primary to-secondary h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-dark/70">Spins Left</span>
+                            <span class="font-semibold text-primary"><span id="spinsLeft">5</span>/5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Earnings Card -->
+                <div class="card-gradient p-6 rounded-xl card-shadow border-gradient hover-scale glow-effect">
+                    <h3 class="text-lg font-semibold text-dark mb-4">Total Earnings</h3>
+                    <div class="text-center">
+                        <p class="text-3xl font-bold text-gradient">₹<span id="totalEarnings">0</span></p>
+                        <button id="withdrawBtn" disabled class="mt-4 btn-gradient text-white px-6 py-2 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover-scale glow-effect">
+                            Withdraw (Min ₹10)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spin Wheel Section -->
+            <div class="card-gradient p-8 rounded-xl card-shadow border-gradient hover-scale glow-effect">
+                <div class="max-w-2xl mx-auto">
+                    <h2 class="text-2xl font-bold text-center text-gradient mb-8">Spin to Win!</h2>
+                    <div class="relative">
+                        <canvas id="wheelCanvas2" class="w-full max-w-md mx-auto"></canvas>
+                        <button id="spinBtn" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 btn-gradient text-white px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover-scale glow-effect">
+                            SPIN!
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spin History -->
+            <div class="mt-8 card-gradient p-6 rounded-xl card-shadow border-gradient hover-scale glow-effect">
+                <h3 class="text-xl font-semibold text-dark mb-4">Spin History</h3>
+                <div id="spinHistory" class="space-y-3">
+                    <!-- History items will be added here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center glow-effect">
+                            <span class="text-white font-bold text-xl">S</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">Spin to Earn</h2>
+                    </div>
+                    <p class="text-gray-400">Win real money with every spin. Start earning today!</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="about.html" target="_blank" class="text-gray-400 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="contact.html" target="_blank" class="text-gray-400 hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <p class="text-gray-400">Email: support@spintoearn.com</p>
+                    <p class="text-gray-400">Phone: +91 1234567890</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Spin to Earn. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlJ00qFF3jS5WgBwkRCVqMZGsdaTYjRY0",
+            authDomain: "spin-to-earn-680bf.firebaseapp.com",
+            projectId: "spin-to-earn-680bf",
+            storageBucket: "spin-to-earn-680bf.firebaseapp.com",
+            messagingSenderId: "130933785553",
+            appId: "1:130933785553:web:26953bbed617ba594e16f0",
+            measurementId: "G-1ZW8CMEC98"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+    
+    <!-- Firebase Auth and Firestore -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script type="module" src="app.js"></script>
+
+    <script>
+        // Preview Wheel Animation
+        const previewWheel = document.getElementById('previewWheel');
+        const previewCtx = previewWheel.getContext('2d');
+        let previewRotation = 0;
+
+        const prizes = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3];
+        const colors = ['#ADD8E6', '#FFA500', '#90EE90', '#FF0000', '#87CEEB', '#FFFF00', '#808080', '#FFA500', '#90EE90', '#FF0000', '#ADD8E6', '#FFA500'];
+
+        function resizePreviewWheel() {
+            const container = previewWheel.parentElement;
+            previewWheel.width = container.clientWidth;
+            previewWheel.height = container.clientWidth; // Keep it square
+            drawPreviewWheel();
+        }
+
+        function drawPreviewWheel() {
+            const diameter = previewWheel.width;
+            const radius = diameter / 2;
+            const arc = Math.PI / (prizes.length / 2);
+
+            previewCtx.clearRect(0, 0, diameter, diameter);
+            for (let i = 0; i < prizes.length; i++) {
+                const angle = previewRotation + i * arc;
+                previewCtx.beginPath();
+                previewCtx.arc(radius, radius, radius, angle, angle + arc, false);
+                previewCtx.lineTo(radius, radius);
+                previewCtx.fillStyle = colors[i % colors.length];
+                previewCtx.fill();
+                previewCtx.save();
+                previewCtx.translate(radius, radius);
+                previewCtx.rotate(angle + arc / 2);
+                previewCtx.fillStyle = 'black';
+                previewCtx.font = 'bold 14px sans-serif';
+                previewCtx.textAlign = 'center';
+                previewCtx.fillText(prizes[i] + '₹', radius * 0.7, 0);
+                previewCtx.restore();
+            }
+        }
+
+        // Slow continuous rotation
+        function animatePreviewWheel() {
+            previewRotation += 0.005;
+            drawPreviewWheel();
+            requestAnimationFrame(animatePreviewWheel);
+        }
+
+        window.addEventListener('resize', resizePreviewWheel);
+        window.addEventListener('load', () => {
+            resizePreviewWheel();
+            animatePreviewWheel();
+        });
+    </script>
+</body>
+</html> 
